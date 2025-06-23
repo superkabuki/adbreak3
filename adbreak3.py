@@ -8,7 +8,7 @@ generates SCTE-35 cues for sidecar files
 
 import argparse
 import os
-from threefive3 import Cue, SpliceInsert
+from threefive import Cue, SpliceInsert
 
 
 def argue():
