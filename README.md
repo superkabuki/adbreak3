@@ -84,6 +84,51 @@ a@fu:~$ cat sidecar.txt
 0.0,/DAgAAAAAAAAAP/wDwUAAAABf//+AFJlwAABAAAAAMOOklg=
 ```
 
+# So? What do I do with a sidecar file?
+### Use it to inject SCTE-35 into MPEGTS or HLS. 
+
+### MPEGTS
+* Use it with threefive's SuperKabuki packet injection engine
+
+* generate a sidecar file
+* If the sidecar file exists, new SCTE-35 data will be appended.
+```sh
+a@fu:~/x9k3$ adbreak3 -p 33.3 -d 45.4
+
+Writing to sidecar file: sidecar.txt
+
+		CUE-OUT   PTS:33.3   Id:1   Duration: 45.4
+		CUE-IN    PTS:78.7   Id:2
+
+a@fu:~/x9k3$ adbreak3 -p 118.11 -d 15.98
+
+Writing to sidecar file: sidecar.txt
+
+		CUE-OUT   PTS:118.11   Id:1   Duration: 15.98
+		CUE-IN    PTS:134.09   Id:2
+
+a@fu:~/x9k3$ 
+```
+* use threefive to add it to MPEGTS
+```sh
+a@fu:~/x9k3$ threefive inject  -i input.ts -s sidecar.txt -o output.ts
+
+Output File:	output.ts
+
+Inserted Cue:
+	@34.766667, /DAlAAAAAAAAAP/wFAUAAAABf+/+AC27CP4APljwAAEAAAAAW6byOQ==
+
+Inserted Cue:
+	@79.366667, /DAgAAAAAAAAAP/wDwUAAAACf0/+AGwT+AACAAAAAOgvjTs=
+
+Inserted Cue:
+	@119.766667, /DAlAAAAAAAAAP/wFAUAAAABf+/+AKIzDP4AFfH4AAEAAAAAQ1KVCg==
+
+Inserted Cue:
+	@134.533333, /DAgAAAAAAAAAP/wDwUAAAACf0/+ALglBAACAAAAAGQRXqA=
+a@fu:~/x9k3$ 
+```
+
 
 
 
