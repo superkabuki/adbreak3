@@ -29,7 +29,7 @@ options:
 
 ## Install 
 1. `git clone https://github.com/superkabuki/adbreak3`
-2. `python3 -mpip install threefive3`
+2. `python3 -mpip install threefive`
 3.  `cd adbreak3`
 4.  `install adbrerak3 /usr/local/bin`
 
@@ -95,14 +95,14 @@ a@fu:~$ cat sidecar.txt
 * generate a sidecar file
 * If the sidecar file exists, new SCTE-35 data will be appended.
 ```sh
-a@fu:~/x9k3$ adbreak3 -p 33.3 -d 45.4
+a@fu:~/x9k3$ adbreak3 -p 33.3 -d 45.4 -P
 
 Writing to sidecar file: sidecar.txt
 
 		CUE-OUT   PTS:33.3   Id:1   Duration: 45.4
 		CUE-IN    PTS:78.7   Id:2
 
-a@fu:~/x9k3$ adbreak3 -p 118.11 -d 15.98
+a@fu:~/x9k3$ adbreak3 -p 118.11 -d 15.98 -P
 
 Writing to sidecar file: sidecar.txt
 
