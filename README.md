@@ -1,21 +1,23 @@
 # adbreak3
 Fast SCTE-35 Cue Creation.
 adbreak3 Generates SCTE-35 Cues for Sidecar files.
-```js
-a@fu:~$ ./adbreak3 -h
-usage: adbreak3 [-h] [-d DURATION] [-e EVENT_ID] [-i] [-o] [-p PTS]
+```smalltalk
+a@fu:~/x9k3$ adbreak3 -h
+usage: adbreak3 [-h] [-d DURATION] [-e EVENT_ID] [-i] [-o] [-p PTS] [-P]
                 [-s SIDECAR] [-v]
 
 options:
   -h, --help            show this help message and exit
   -d DURATION, --duration DURATION
-                        set duration of ad break. [ default: 60.0 ]
+                        Set duration of ad break. [ default: 60.0 ]
   -e EVENT_ID, --event-id EVENT_ID
-                        set event id for ad break. [ default: 1 ]
-  -i, --cue-in-only     only make a cue-in SCTE-35 cue [ default: False ]
-  -o, --cue-out-only    only make a cue-out SCTE-35 cue [ default: False ]
-  -p PTS, --pts PTS     set start pts for ad break. Not setting pts will
+                        Set event id for ad break. [ default: 1 ]
+  -i, --cue-in-only     Only make a cue-in SCTE-35 cue [ default: False ]
+  -o, --cue-out-only    Only make a cue-out SCTE-35 cue [ default: False ]
+  -p PTS, --pts PTS     Set start pts for ad break. Not setting pts will
                         generate a Splice Immediate CUE-OUT. [ default: 0.0 ]
+  -P, --preroll         Add SCTE data four seconds before splice point. Used
+                        with MPEGTS. [ default: False ]
   -s SIDECAR, --sidecar SIDECAR
                         Sidecar file of SCTE-35 (pts,cue) pairs. [ default:
                         sidecar.txt ]
