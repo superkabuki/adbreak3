@@ -111,7 +111,7 @@ Writing to sidecar file: sidecar.txt
 
 a@fu:~/x9k3$ 
 ```
-* use threefive to add it to MPEGTS
+* use [threefive](https://github.com/superkabuki/threefive) to add it to MPEGTS
 ```sh
 a@fu:~/x9k3$ threefive inject  -i input.ts -s sidecar.txt -o output.ts
 
@@ -130,9 +130,85 @@ Inserted Cue:
 	@134.533333, /DAgAAAAAAAAAP/wDwUAAAACf0/+ALglBAACAAAAAGQRXqA=
 a@fu:~/x9k3$ 
 ```
+### HLS
+* use [x9k3](https://github.com/superkabuki/x9k3) to add it to hls
+
+* make a sidecar file
+```py3
+a@fu:~/x9k3$ adbreak3 -p 34 -d 60 -e 5
+
+Writing to sidecar file: sidecar.txt
+
+		CUE-OUT   PTS:34.0   Id:5   Duration: 60.0
+		CUE-IN    PTS:94.0   Id:6
+
+a@fu:~/x9k3$ adbreak3 -p 200 -d 30 -e 7
+
+Writing to sidecar file: sidecar.txt
+
+		CUE-OUT   PTS:200.0   Id:7   Duration: 30.0
+		CUE-IN    PTS:230.0   Id:8
+
+a@fu:~/x9k3$ adbreak3 -p 411.45 -d 56.346 -e 9
+
+Writing to sidecar file: sidecar.txt
+
+		CUE-OUT   PTS:411.45   Id:9   Duration: 56.346
+		CUE-IN    PTS:467.796   Id:10
+
+```
+
+* call x9k3
+```js
+a@fu:~/x9k3$ x9k3 -i bk-30-60.ts -o output_dir -t 6 -s sidecar.txt
+input = bk-30-60.ts
+byterange = False
+continue_m3u8 = False
+delete = False
+live = False
+no_discontinuity = False
+no_throttle = False
+output_dir = output_dir
+program_date_time = False
+replay = False
+sidecar_file = sidecar.txt
+shulga = False
+time = 6.0
+hls_tag = x_cue
+window_size = 5
+version = False
+loading  34.0,/DAlAAAAAAAAAP/wFAUAAAAFf+/+AC6xIP4AUmXAAAUAAAAA96thJQ==
+loading  94.0,/DAgAAAAAAAAAP/wDwUAAAAGf0/+AIEW4AAGAAAAAF3ctkA=
+loading  200.0,/DAlAAAAAAAAAP/wFAUAAAAHf+/+ARKogP4AKTLgAAcAAAAAsCdxSQ==
+loading  230.0,/DAgAAAAAAAAAP/wDwUAAAAIf0/+ATvbYAAIAAAAAAe4Y1E=
+loading  411.45,/DAlAAAAAAAAAP/wFAUAAAAJf+/+AjUKZP4ATWEkAAkAAAAAX0r8lQ==
+loading  467.796,/DAgAAAAAAAAAP/wDwUAAAAKf0/+AoJriAAKAAAAAIB1qZc=
+output_dir/seg0.ts:   start: 1.46667   end: 8.533333   duration: 7.06667
+output_dir/seg1.ts:   start: 8.53333   end: 16.266667   duration: 7.73333
+output_dir/seg2.ts:   start: 16.2667   end: 24.033333   duration: 7.7666
 
 
-
+```
+```js
+a@fu:~/x9k3$ grep -2 'CUE' output_dir/index.m3u8
+seg4.ts
+#EXT-X-DISCONTINUITY
+#EXT-X-CUE-OUT:60.0
+#EXTINF:6.0,
+seg5.ts
+#EXT-X-CUE-OUT-CONT:6.000000/60.0
+#EXTINF:6.0,
+seg6.ts
+#EXT-X-CUE-OUT-CONT:12.000000/60.0
+#EXTINF:6.933333,
+seg7.ts
+#EXT-X-CUE-OUT-CONT:18.933333/60.0
+#EXTINF:7.733333,
+seg8.ts
+#EXT-X-CUE-OUT-CONT:26.666666/60.0
+#EXTINF:6.433334,
+....
+```
 
 
 ![image](https://github.com/futzu/adbreak2/assets/52701496/109a9e49-9aa0-43fa-8c97-3da12f105a33)
